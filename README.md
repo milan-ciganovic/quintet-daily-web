@@ -5,87 +5,126 @@ pages, built from the mockups in `Quintet Daily screens (2).pdf`.
 
 ## Stack
 
-Static HTML + CSS, powered by Vue 3 for the header, footer, and the
-answer-grid widget. No build step, no `npm install`, no `node_modules` —
-Vue is loaded straight from a CDN as a global script, the same way you'd
-add jQuery. This matters here specifically: this machine has no Node.js
-installed, so anything requiring a build (Vite, Nuxt, webpack) couldn't
-even be compiled or previewed locally.
+A real Vue 3 project, scaffolded with `pnpm create vue@latest` (Vite +
+Vue Router), no TypeScript, no state management library, no test runner —
+none of those pull their weight for a four-page marketing site.
 
-**Why the content isn't all in Vue.** Only the site chrome (header/nav,
-footer) and small repeated widgets (the answer-grid squares) are Vue
-components. The headline, body copy, "How it works" text, and every word
-of the Privacy/Terms/Support pages are plain HTML, not rendered by
-JavaScript. That's deliberate: this is a marketing and legal site, so the
-words are the product. Search engines and link-preview bots (Slack,
-iMessage, Twitter) that don't run JavaScript need to see that text
-immediately in the page source, and a visitor with JavaScript blocked or
-slow to load should still be able to read it. The header/footer nav is a
-smaller loss if JS is unavailable — the same links are always reachable
-from the footer.
+It's a client-rendered single-page app: one `index.html` shell, and
+Vue Router swaps the page content in the browser. `/privacy`, `/terms`
+and `/support` are real, linkable URLs — see "SPA routing on a static
+host" below for what that requires from wherever you deploy it.
 
-If you'd rather have the whole page be a single Vue app (simpler mental
-model, at the cost of the above), that's a valid call too — just say so.
-
-The look matches the app: same ink/surface colors and the Archivo typeface
-as `packages/quizzly_design_system` in the main `quizzly` repo. If those
-tokens change there, update `assets/css/style.css` to match.
+The look matches the app: same ink/surface colors and the Archivo
+typeface as `packages/quizzly_design_system` in the main `quizzly` repo.
+If those tokens change there, update `src/assets/base.css` to match.
 
 ## Structure
 
 ```
-index.html      Landing page (hero, how it works, share preview)
-privacy.html    Privacy Policy
-terms.html      Terms of Service
-support.html    Support / FAQ
-assets/
-  css/style.css
-  js/components.js       Vue components: SiteHeader, SiteFooter, AnswerGrid
-  img/quintet-mark.svg    the logo mark, for the header
-  img/favicon.svg
-robots.txt
+src/
+  App.vue               SiteHeader + <RouterView/> + SiteFooter
+  main.js
+  router/index.js        routes, per-page <title>, scroll-to-hash/top
+  assets/base.css         all styling — global, not scoped per component
+  components/
+    SiteHeader.vue        nav + mobile menu toggle
+    SiteFooter.vue
+    QuintetMark.vue        the logo mark
+    AnswerGrid.vue          the 5-square result widget (used twice on Home)
+    LegalLayout.vue         TOC sidebar + article wrapper, shared by
+                            Privacy and Terms
+  views/
+    HomeView.vue
+    PrivacyView.vue
+    TermsView.vue
+    SupportView.vue
+public/
+  favicon.svg
+  robots.txt
+  _redirects              Netlify SPA fallback (see below)
+vercel.json               Vercel SPA fallback (see below)
 ```
 
-Vue itself is pinned to an exact version via CDN in each page's
-`<script>` tag (currently 3.5.43) — bump that version deliberately, not
-by accident, since an unpinned `@3` URL can change under you.
+## A real limitation worth knowing about: no server rendering
+
+There's no SSG/SSR step here (no `vite-ssg`, no prerendering) — that
+would be a legitimate next step, but it's more infrastructure than this
+ask called for. The practical effect: content only exists in the page
+**after** JavaScript runs.
+
+- A visitor with JavaScript disabled, or a crawler that doesn't execute
+  it, sees an empty shell.
+- Link-preview bots (Slack, iMessage, Twitter) only ever read the
+  static `<title>`/`<meta>` tags in `index.html` — they don't run the
+  Vue app, so every route shares the same social-preview title and
+  description, not a per-page one. (The browser tab title *does*
+  update per route — that's set in `router/index.js` — but that's a
+  client-side-only effect, invisible to those bots.)
+- Google specifically does render JavaScript for indexing, so this
+  isn't invisible to search — but non-Google crawlers and share
+  previews are the real cost.
+
+If that turns out to matter (it matters more for Privacy/Terms than for
+the homepage), the fix is adding static-site generation later — worth a
+separate pass, not a silent addition here.
+
+## SPA routing on a static host
+
+Because navigation is client-side, a host needs to serve `index.html`
+for *any* path (`/privacy`, `/terms`, ...), not just `/`, or a direct
+link or page refresh on those routes 404s. This repo already has the
+config for the common hosts:
+
+- **Netlify**: `public/_redirects` → copied into `dist/` by Vite,
+  already does this.
+- **Vercel**: `vercel.json` rewrites everything to `/index.html`.
+- **GitHub Pages**: has no rewrite mechanism, so the build's `postbuild`
+  script (`package.json`) copies `dist/index.html` to `dist/404.html` —
+  Pages serves that on any unknown path, and the SPA takes it from
+  there. Already wired up; nothing extra to configure.
 
 ## Before this goes live
 
-`privacy.html`, `terms.html` and `support.html` all have bracketed
-placeholders (`[DATE]`, `[YOUR SUPPORT EMAIL]`, and similar) copied
-verbatim from the mockups. Search for `[` and fill every one in — a legal
-page that ships with placeholders is worse than not having one. Terms and
-Privacy should get an actual legal review, not just a text pass; this repo
-gives you the structure, not the legal opinion.
+`PrivacyView.vue`, `TermsView.vue` and `SupportView.vue` all have
+bracketed placeholders (`[DATE]`, `[YOUR SUPPORT EMAIL]`, and similar)
+copied verbatim from the mockups. Search for `[` and fill every one in —
+a legal page that ships with placeholders is worse than not having one.
+Terms and Privacy should get an actual legal review, not just a text
+pass; this repo gives you the structure, not the legal opinion.
 
-The footer's copyright line (in `assets/js/components.js`, `SiteFooter`)
-reads "© 2026 Quintet Daily" — the mockups used a
-"[Your company name]" placeholder there instead, in case your legal
-entity's name differs from the product name. Edit that component if so.
+`SiteFooter.vue`'s copyright line reads "© 2026 Quintet Daily" — the
+mockups used a "[Your company name]" placeholder there instead, in case
+your legal entity's name differs from the product name. Edit that
+component if so.
 
-The landing page's "Get it on Google Play" button (`#get-the-app`) has no
-target yet — point it at the real Play Store listing once one exists.
+The landing page's "Get it on Google Play" button (`#get-the-app`) has
+no target yet — point it at the real Play Store listing once one
+exists.
 
 ## Running it locally
 
-There's still no build. Because the components are plain (non-module)
-scripts rather than ES modules, you can just double-click `index.html`
-and it works, or serve the folder so it behaves identically to
-production:
+```sh
+pnpm install
+pnpm dev
+```
+
+## Building
 
 ```sh
-python3 -m http.server 8000
-# then open http://localhost:8000
+pnpm build      # writes dist/ (runs the 404.html copy automatically)
+pnpm preview    # serve dist/ locally to sanity-check the production build
 ```
 
 ## Deploying
 
-Any static host works — the whole site is these files as-is.
+Deploy the contents of `dist/` after running `pnpm build` — not the
+repo's source files directly, unlike a plain static site.
 
-**GitHub Pages** (no config file needed): push this repo to GitHub, then
-in the repo's Settings → Pages, set the source to the `main` branch, root
-folder.
+**Netlify / Vercel**: connect the repo. Build command `pnpm build`,
+publish/output directory `dist`. Both platforms' SPA config is already
+in this repo (see above).
 
-**Netlify / Vercel / Cloudflare Pages**: connect the repo; leave the build
-command empty and the publish/output directory as `.` (repo root).
+**GitHub Pages**: push this repo, run `pnpm build` (locally, or via a
+GitHub Actions workflow — not set up here), and publish the `dist/`
+folder's contents to the `gh-pages` branch or via Pages' "deploy from a
+branch/folder" setting.
