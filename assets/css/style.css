@@ -1,0 +1,584 @@
+/* Quintet Daily — marketing site
+   Tokens mirror the app's design system (packages/quizzly_design_system)
+   so the site and the product look like the same thing. */
+
+:root {
+  --ink: #0a0a0a;
+  --ink-strong: #3a3a37;
+  --ink-body: #56564f;
+  --ink-muted: #6b6b64;
+  --ink-faint: #9a9a92;
+
+  --canvas: #ffffff;
+  --surface: #f2f2ef;
+  --tile: #f5f5f2;
+  --divider: #eeeeea;
+  --border: #dddDd7;
+  --border-strong: #d8d8d2;
+
+  --radius: 12px;
+  --radius-pill: 999px;
+  --max-width: 1100px;
+
+  --font: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink-body);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+.wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ---------------------------------------------------------------- header */
+
+.site-header {
+  border-bottom: 1px solid var(--divider);
+}
+
+.site-header .wrap {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 72px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.4px;
+  margin-right: auto;
+}
+
+.brand .mark {
+  width: 22px;
+  height: 22px;
+  color: var(--ink);
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.site-nav a {
+  text-decoration: none;
+  color: var(--ink-muted);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.site-nav a:hover,
+.site-nav a[aria-current='page'] {
+  color: var(--ink);
+}
+
+.site-nav .btn {
+  color: var(--canvas);
+}
+
+@media (max-width: 640px) {
+  .site-nav a:not(.btn) {
+    display: none;
+  }
+}
+
+/* ---------------------------------------------------------------- buttons */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 52px;
+  padding: 0 24px;
+  border-radius: 14px;
+  background: var(--ink);
+  color: var(--canvas);
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+.btn.small {
+  height: 40px;
+  padding: 0 16px;
+  font-size: 13px;
+  border-radius: 12px;
+}
+
+.btn.outline {
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid var(--border);
+}
+
+/* ------------------------------------------------------------------ hero */
+
+.hero {
+  padding: 72px 0 96px;
+}
+
+.hero .wrap {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 56px;
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .hero .wrap {
+    grid-template-columns: 1fr 420px;
+  }
+}
+
+.hero h1 {
+  font-size: 44px;
+  line-height: 1.08;
+  letter-spacing: -1.3px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 20px;
+}
+
+@media (min-width: 640px) {
+  .hero h1 {
+    font-size: 60px;
+    letter-spacing: -1.8px;
+  }
+}
+
+.hero p.lede {
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--ink-body);
+  max-width: 46ch;
+  margin: 0 0 32px;
+}
+
+.hero .cta-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.hero .cta-note {
+  font-size: 13px;
+  color: var(--ink-faint);
+  line-height: 1.4;
+}
+
+/* -------------------------------------------------------------- phone UI */
+
+.phone {
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  border: 10px solid var(--ink);
+  border-radius: 44px;
+  padding: 28px 22px;
+  background: var(--canvas);
+}
+
+.phone .eyebrow {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.6px;
+  color: var(--ink-muted);
+  margin-bottom: 16px;
+}
+
+.answer-grid {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.answer-grid .cell {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--ink);
+}
+
+.answer-grid .cell.miss {
+  background: var(--canvas);
+  border: 2px solid var(--border-strong);
+}
+
+.phone .score {
+  text-align: center;
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: -2px;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.phone .time {
+  text-align: center;
+  font-size: 13px;
+  color: var(--ink-muted);
+  margin-bottom: 18px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 17px;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-strong);
+}
+
+.phone .pill-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.phone hr {
+  border: none;
+  border-top: 1px solid var(--divider);
+  margin: 0 0 20px;
+}
+
+.phone .streak-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.phone .streak-row .count {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.8px;
+}
+
+.phone .streak-row .count span {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-strong);
+  margin-left: 6px;
+}
+
+.phone .streak-row .delta {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.week-strip {
+  display: flex;
+  gap: 6px;
+}
+
+.week-strip .day {
+  flex: 1;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.week-strip .day.played {
+  background: var(--ink);
+}
+
+/* ---------------------------------------------------------------- how-it */
+
+.section {
+  padding: 72px 0;
+}
+
+.section.tinted {
+  background: var(--surface);
+}
+
+.section .kicker {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin: 0 0 40px;
+}
+
+.how-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+
+@media (min-width: 780px) {
+  .how-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.how-item .num {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--ink-faint);
+  margin: 0 0 10px;
+}
+
+.how-item h3 {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 10px;
+}
+
+.how-item p {
+  margin: 0;
+  color: var(--ink-body);
+  font-size: 15px;
+}
+
+/* -------------------------------------------------------------- share */
+
+.share-section .wrap {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .share-section .wrap {
+    grid-template-columns: 1fr 380px;
+  }
+}
+
+.share-section h2 {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.8px;
+  color: var(--ink);
+  margin: 0 0 14px;
+}
+
+.share-section p {
+  font-size: 16px;
+  color: var(--ink-body);
+  max-width: 48ch;
+  margin: 0;
+}
+
+.share-card {
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+}
+
+.share-card .title {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+
+.share-card .answer-grid {
+  margin-bottom: 14px;
+}
+
+.share-card .time {
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+
+/* --------------------------------------------------------------- footer */
+
+.site-footer {
+  border-top: 1px solid var(--divider);
+  padding: 32px 0;
+}
+
+.site-footer .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.site-footer p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--ink-faint);
+}
+
+.site-footer nav {
+  display: flex;
+  gap: 20px;
+}
+
+.site-footer nav a {
+  font-size: 13px;
+  color: var(--ink-muted);
+  text-decoration: none;
+}
+
+.site-footer nav a:hover {
+  color: var(--ink);
+}
+
+/* ----------------------------------------------------------- text pages */
+
+.legal-page .wrap {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  padding: 56px 24px 96px;
+}
+
+@media (min-width: 860px) {
+  .legal-page .wrap {
+    grid-template-columns: 220px 1fr;
+  }
+}
+
+.legal-toc {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.legal-toc ul {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.legal-toc li {
+  margin-bottom: 10px;
+}
+
+.legal-toc a {
+  color: var(--ink-muted);
+  text-decoration: none;
+}
+
+.legal-toc a:hover {
+  color: var(--ink);
+}
+
+.legal-body h1 {
+  font-size: 40px;
+  letter-spacing: -1px;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+
+.legal-body .updated {
+  font-size: 13px;
+  color: var(--ink-faint);
+  margin: 0 0 40px;
+}
+
+.legal-body h2 {
+  font-size: 20px;
+  color: var(--ink);
+  margin: 40px 0 12px;
+}
+
+.legal-body h2:first-of-type {
+  margin-top: 0;
+}
+
+.legal-body p {
+  font-size: 15px;
+  color: var(--ink-body);
+  margin: 0 0 16px;
+}
+
+.legal-body .placeholder {
+  color: var(--ink-faint);
+  font-style: italic;
+}
+
+.simple-page .wrap {
+  max-width: 680px;
+  padding: 72px 24px 112px;
+}
+
+.simple-page h1 {
+  font-size: 40px;
+  letter-spacing: -1px;
+  color: var(--ink);
+  margin: 0 0 20px;
+}
+
+.simple-page p {
+  font-size: 16px;
+  color: var(--ink-body);
+  margin: 0 0 16px;
+}
+
+.simple-page .faq dt {
+  font-weight: 700;
+  color: var(--ink);
+  margin-top: 24px;
+}
+
+.simple-page .faq dd {
+  margin: 6px 0 0;
+  color: var(--ink-body);
+}
