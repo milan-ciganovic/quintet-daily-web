@@ -263,28 +263,34 @@ a {
 
 .phone {
   width: 100%;
-  max-width: 320px;
+  /* The source design is a fixed 300x600 artboard. Width is capped to
+     match it exactly at 300px+; height is left auto (rather than forced
+     to 600px) so it can't clip content or overflow on narrow phones. */
+  max-width: 300px;
   margin: 0 auto;
-  border: 10px solid var(--ink);
-  border-radius: 44px;
-  padding: 28px 22px;
+  border: 9px solid var(--ink);
+  border-radius: 40px;
+  padding: 30px 24px;
   background: var(--canvas);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
 .phone .eyebrow {
   text-align: center;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 600;
   letter-spacing: 1.6px;
   color: var(--ink-muted);
-  margin-bottom: 16px;
 }
 
 .answer-grid {
   display: flex;
   justify-content: center;
   gap: 8px;
-  margin-bottom: 20px;
 }
 
 .answer-grid .cell {
@@ -299,83 +305,103 @@ a {
   border: 2px solid var(--border-strong);
 }
 
+/* Smaller cells inside the phone card specifically — the share-card's
+   grid (further down the page) keeps the default size above. */
+.phone .answer-grid .cell {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+}
+
+.phone .answer-grid .cell.miss {
+  border-width: 3px;
+}
+
+.phone .score-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
 .phone .score {
   text-align: center;
-  font-size: 48px;
+  font-size: 58px;
   font-weight: 700;
-  letter-spacing: -2px;
+  letter-spacing: -2.61px;
   color: var(--ink);
   line-height: 1;
-  margin-bottom: 6px;
 }
 
 .phone .time {
   text-align: center;
-  font-size: 13px;
-  color: var(--ink-muted);
-  margin-bottom: 18px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-body);
 }
 
 .pill {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 9px 17px;
+  padding: 7px 14px;
   border-radius: var(--radius-pill);
   background: var(--surface);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   color: var(--ink-strong);
-}
-
-.phone .pill-row {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
 }
 
 .phone hr {
+  width: 100%;
   border: none;
   border-top: 1px solid var(--divider);
-  margin: 0 0 20px;
+  margin: 0;
 }
 
 .phone .streak-row {
+  width: 100%;
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  margin-bottom: 12px;
 }
 
-.phone .streak-row .count {
+.phone .streak-row .count-group {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+}
+
+.phone .streak-row .count-number {
   font-size: 28px;
   font-weight: 700;
   color: var(--ink);
-  letter-spacing: -0.8px;
+  letter-spacing: -0.84px;
+  line-height: 1;
 }
 
-.phone .streak-row .count span {
-  font-size: 14px;
+.phone .streak-row .count-label {
+  font-size: 12px;
   font-weight: 500;
   color: var(--ink-strong);
-  margin-left: 6px;
 }
 
 .phone .streak-row .delta {
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 11px;
+  font-weight: 600;
   color: var(--ink);
 }
 
 .week-strip {
+  width: 100%;
   display: flex;
   gap: 6px;
 }
 
 .week-strip .day {
   flex: 1;
-  height: 28px;
-  border-radius: 8px;
+  height: 24px;
+  border-radius: 6px;
   background: var(--surface);
 }
 

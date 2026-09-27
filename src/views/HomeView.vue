@@ -38,12 +38,17 @@ const sampleResult = [true, true, false, true, true]
         >
           <p class="eyebrow">QUINTET 37</p>
           <AnswerGrid :cells="sampleResult" />
-          <p class="score">4/5</p>
-          <p class="time">1m 12s</p>
-          <div class="pill-row"><span class="pill">Better than 71% today</span></div>
+          <div class="score-group">
+            <p class="score">4/5</p>
+            <p class="time">1m 12s</p>
+          </div>
+          <span class="pill">Better than 71% today</span>
           <hr />
           <div class="streak-row">
-            <span class="count">3<span>day streak</span></span>
+            <div class="count-group">
+              <span class="count-number">3</span>
+              <span class="count-label">day streak</span>
+            </div>
             <span class="delta">+1 today</span>
           </div>
           <div class="week-strip">
