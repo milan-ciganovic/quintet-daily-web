@@ -5,36 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Quintet Daily — Five questions. Every day.</title>
   <meta name="description" content="The same five questions for everyone, once a day. About ninety seconds. Then you're done until tomorrow. Free, no ads, no account needed to play.">
-  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="./assets/img/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="./assets/css/style.css">
 
   <meta property="og:title" content="Quintet Daily — Five questions. Every day.">
   <meta property="og:description" content="The same five questions for everyone, once a day. About ninety seconds. Then you're done until tomorrow.">
   <meta property="og:type" content="website">
 </head>
 <body>
-  <header class="site-header">
-    <div class="wrap">
-      <a class="brand" href="/">
-        <span class="mark" aria-hidden="true">
-          <svg viewBox="32.5 32.5 175 175" fill="none">
-            <circle cx="114" cy="114" r="74" stroke="currentColor" stroke-width="15" stroke-dasharray="74.49 18.5" stroke-dashoffset="25.6"/>
-            <path d="M166 166 L200 200" stroke="currentColor" stroke-width="15" stroke-linecap="round"/>
-          </svg>
-        </span>
-        Quintet Daily
-      </a>
-      <nav class="site-nav">
-        <a href="/privacy.html">Privacy</a>
-        <a href="/terms.html">Terms</a>
-        <a href="/support.html">Support</a>
-        <a class="btn small" href="#get-the-app">Get the app</a>
-      </nav>
-    </div>
-  </header>
+  <header class="site-header" id="site-header"></header>
 
   <main>
     <section class="hero">
@@ -58,13 +40,7 @@
 
         <div class="phone" role="img" aria-label="Quintet Daily result screen: day 37, four out of five correct, better than 71 percent of players today, a three day streak.">
           <p class="eyebrow">QUINTET 37</p>
-          <div class="answer-grid">
-            <span class="cell"></span>
-            <span class="cell"></span>
-            <span class="cell miss"></span>
-            <span class="cell"></span>
-            <span class="cell"></span>
-          </div>
+          <div id="hero-grid"></div>
           <p class="score">4/5</p>
           <p class="time">1m 12s</p>
           <div class="pill-row"><span class="pill">Better than 71% today</span></div>
@@ -123,27 +99,23 @@
         </div>
         <div class="share-card">
           <p class="title">Quintet Daily 37 · 4/5</p>
-          <div class="answer-grid">
-            <span class="cell"></span>
-            <span class="cell"></span>
-            <span class="cell miss"></span>
-            <span class="cell"></span>
-            <span class="cell"></span>
-          </div>
+          <div id="share-grid"></div>
           <p class="time">1m 12s</p>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="wrap">
-      <p>&copy; 2026 Quintet Daily</p>
-      <nav>
-        <a href="/privacy.html">Privacy Policy</a>
-        <a href="/terms.html">Terms of Service</a>
-      </nav>
-    </div>
-  </footer>
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@3.5.43/dist/vue.global.prod.js"></script>
+  <script src="./assets/js/components.js"></script>
+  <script>
+    const { createApp } = Vue;
+    createApp(QD.SiteHeader).mount('#site-header');
+    createApp(QD.SiteFooter).mount('#site-footer');
+    createApp(QD.AnswerGrid, { cells: [true, true, false, true, true] }).mount('#hero-grid');
+    createApp(QD.AnswerGrid, { cells: [true, true, false, true, true] }).mount('#share-grid');
+  </script>
 </body>
 </html>
