@@ -1,5 +1,4 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="32.5 32.5 175 175">
-  <rect x="0" y="0" width="240" height="240" fill="#ffffff"/>
   <circle cx="114" cy="114" r="74"
           stroke="#0a0a0a" stroke-width="15" fill="none"
           stroke-dasharray="74.49 18.5" stroke-dashoffset="25.6"/>

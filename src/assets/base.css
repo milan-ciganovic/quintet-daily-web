@@ -137,6 +137,16 @@ a {
   color: var(--canvas);
 }
 
+/* On the home route, RouterLink auto-marks "Get the app" aria-current="page"
+   too, since its target path ("/") matches the current one — even though
+   it's a CTA button, not a "you are here" nav link. That makes the [aria-
+   current='page'] rule above (which is more specific than .site-nav .btn
+   alone) win and turn the button's text black-on-black. Match its
+   specificity to keep the button's own color in charge regardless. */
+.site-nav .btn[aria-current='page'] {
+  color: var(--canvas);
+}
+
 @media (max-width: 640px) {
   .nav-toggle {
     display: flex;
